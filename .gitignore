@@ -1,0 +1,5 @@
+# Ignore all tsv files
+*.tsv
+*.txt
+*.xml
+*.ipynb
