@@ -19,7 +19,6 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-
 def tsv2XML(tsvInFile,xmlOutFile):
     root = ET.Element("EXPERIMENT_SET")
     expAttrib={}
@@ -72,16 +71,6 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c512=ET.SubElement(c51, "VALUE")
             c512.text="not collected"
 
-            # c211= ET.SubElement(c21, "PLATFORM")
-            # fileAttrib['filename']=gzFile # parse from tsv
-            # fileAttrib['filetype']='fastq'
-            # fileAttrib['checksum_method']='MD5'
-            # fileAttrib['checksum']=md5 # parse from tsv
-            # c211.attrib=fileAttrib
-
-
-
-
     tree = ET.ElementTree(root) #set the root to 1st element i.e. SAMPLE_SET
     indent(root) #make it PRETTY
 
@@ -96,12 +85,12 @@ def tsv2XML(tsvInFile,xmlOutFile):
     with open (xmlOutFile, 'ab') as file:
         tree.write(file)
 
-
 if __name__ == '__main__':
     inFile = sys.argv[1]
     outFile=inFile[:-3] + 'xml' # name for the output XML file
 
-    tsv2XML(inFile,outFile)
+    tsv2XML(inFile,outFile) # run parser function and create XML
 
+    # minor esthetic fix
     # replace ' /' with '/' in the XML file
     subprocess.call(["sed", "-i", "-e", 's/ \//\//g', outFile])

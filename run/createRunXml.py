@@ -2,10 +2,9 @@
 import sys, subprocess
 import xml.etree.ElementTree as ET
 
-# make XML pretty
+# make the XML pretty
 # source: https://stackoverflow.com/questions/3095434/inserting-newlines-in-xml-file-generated-via-xml-etree-elementtree-in-python
 def indent(elem, level=0):
-    #i = "\n" + level*"  "
     i = "\n" + level*"  "
     if len(elem):
         if not elem.text or not elem.text.strip():
@@ -19,7 +18,6 @@ def indent(elem, level=0):
     else:
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
-
 
 def tsv2XML(tsvInFile,xmlOutFile):
     root = ET.Element("RUN_SET")
@@ -43,10 +41,7 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c1.attrib= expAttrib
 
             c2 = ET.SubElement(r1,"DATA_BLOCK")
-            # c2.attrib={}
-
             c21= ET.SubElement(c2,"FILES")
-            # c21.attrib={}
 
             c211= ET.SubElement(c21,"FILE")
             fileAttrib['filename']=str(gzFile) # parse from tsv
@@ -66,12 +61,12 @@ def tsv2XML(tsvInFile,xmlOutFile):
     with open (xmlOutFile, 'ab') as file:
         tree.write(file,encoding='UTF-8')
 
-
 if __name__ == '__main__':
     inFile = sys.argv[1]
     outFile=inFile[:-3] + 'xml' # name for the output XML file
 
-    tsv2XML(inFile,outFile)
+    tsv2XML(inFile,outFile) # run parser function and create XML
 
+    # minor esthetic fix
     # replace ' /' with '/' in the XML file
     subprocess.call(["sed", "-i", "-e", 's/ \//\//g', outFile])
