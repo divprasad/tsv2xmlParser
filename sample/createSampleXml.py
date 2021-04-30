@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import sys
 import xml.etree.ElementTree as ET
 
 # make XML pretty
@@ -161,4 +161,5 @@ def tsv2XML(tsvInFile):
 
 
 if __name__ == '__main__':
-    tsv2XML("full.tsv")
+    inFile = sys.argv[1]
+    tsv2XML(inFile)
