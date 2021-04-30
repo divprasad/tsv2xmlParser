@@ -56,7 +56,7 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c3=ET.SubElement(r1, "DESIGN")
             c31=ET.SubElement(c3, "DESIGN_DESCRIPTION")
             c32=ET.SubElement(c3, "SAMPLE_DESCRIPTOR")
-            c32.attrib['accession']=samAlias
+            c32.attrib['accession']=samAlias # parse from tsv
 
             c33=ET.SubElement(c3, "LIBRARY_DESCRIPTOR")
             c331=ET.SubElement(c33, "LIBRARY_NAME")

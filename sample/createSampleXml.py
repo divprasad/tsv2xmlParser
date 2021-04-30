@@ -51,8 +51,8 @@ def tsv2XML(tsvInFile, xmlOutFile):
 
             r1 = ET.SubElement(root, "SAMPLE")
             r1.attrib['alias']=alias # parse from tsv
-            r1.attrib['center_name']="ERASMUS MC, UNIVERISTY MEDICAL CENTER"
-            r1.attrib['broker_name']="Submission account for department of Viroscience’s Research Teams, ErasmusMC"
+            r1.attrib['center_name']="Dutch COVID-19 response team"
+            # r1.attrib['broker_name']="Submission account for department of Viroscience’s Research Teams, ErasmusMC"
             #r1.attrib['center_name']='Dutch COVID-19 response team'
             #root.append (r1)
 
