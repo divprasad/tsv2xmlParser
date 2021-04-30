@@ -7,6 +7,7 @@ Parses a .tsv file & converts to the equivalent .xml file
 ## `createSampleXml.py`
 
 accepts one tsv file as the argument; tsv has the format:
+
   "alias"    "date"    "province"    "isolateName"    "GisaidID"
 
   Run3zz_BC01    2020-11-19    somewhere north    hCoV-19/Netherlands/xy-ZZZ-1001/2020    EPI_ISL_xyyxzz  
