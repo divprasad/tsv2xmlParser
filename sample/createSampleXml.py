@@ -4,37 +4,61 @@ import xml.etree.ElementTree as ET
 
 # make XML pretty
 # source: https://stackoverflow.com/questions/3095434/inserting-newlines-in-xml-file-generated-via-xml-etree-elementtree-in-python
+# source: https://stackoverflow.com/a/33956544
 def indent(elem, level=0):
     i = "\n" + level*"  "
     if len(elem):
         if not elem.text or not elem.text.strip():
             elem.text = i + "  "
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-        for elem in elem:
-            indent(elem, level+1)
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-    else:
-        if level and (not elem.tail or not elem.tail.strip()):
-            elem.tail = i
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+                for elem in elem:
+                    indent(elem, level+1)
+                    if not elem.tail or not elem.tail.strip():
+                        elem.tail = i
+                    else:
+                        if level and (not elem.tail or not elem.tail.strip()):
+                            elem.tail = i
 
+# https://stackoverflow.com/a/38573964/146633
+def prettify(element, indent='  '):
+    queue = [(0, element)]  # (level, element)
+    while queue:
+        level, element = queue.pop(0)
+        children = [(level + 1, child) for child in list(element)]
+        if children:
+            element.text = '\n' + indent * (level+1)  # for child open
+            if queue:
+                element.tail = '\n' + indent * queue[0][0]  # for sibling open
+            else:
+                element.tail = '\n' + indent * (level-1)  # for parent close
+                queue[0:0] = children  # prepend so children come before siblings
 
-def tsv2XML(tsvInFile):
+# another source: https://stackoverflow.com/a/12940014  # ARCHIVED
+
+def tsv2XML(tsvInFile, xmlOutFile):
     root = ET.Element("SAMPLE_SET")
-    samAttrib={}
+    #samAttrib={}
 
     # Loop to read input tsv file and parse each line as a SAMPLE in the Sample_SET XML
     with open(tsvInFile, 'r') as f:
         for line in f:
             line=line.rstrip()
             alias, date, province, isolate, gid = line.split('\t')
-            samAttrib['alias']=alias
-            samAttrib['center_name']='Dutch COVID-19 response team'
+            #samAttrib['alias']=alias
+            # print(alias,date)
+            #samAttrib['center_name']='Dutch COVID-19 response team'
 
-            r1 = ET.Element("SAMPLE")
-            r1.attrib=samAttrib # parse from tsv
-            root.append (r1)
+            r1 = ET.SubElement(root, "SAMPLE")
+            r1.attrib['alias']=alias # parse from tsv
+            r1.attrib['center_name']="ERASMUS MC, UNIVERISTY MEDICAL CENTER"
+            r1.attrib['broker_name']="Submission account for department of Viroscience’s Research Teams, ErasmusMC"
+            #r1.attrib['center_name']='Dutch COVID-19 response team'
+            #root.append (r1)
+
+            # r1 = ET.Element("SAMPLE")
+            # r1.attrib=samAttrib # parse from tsv
+            # root.append (r1)
 
             c1 = ET.SubElement(r1, "TITLE")
             c1.text = "Dutch COVID-19 response sample sequencing"
@@ -69,7 +93,7 @@ def tsv2XML(tsvInFile):
 
             c43= ET.SubElement(c4, "SAMPLE_ATTRIBUTE")
             c431=ET.SubElement(c43, "TAG")
-            c431.text="collecting name"
+            c431.text="collector name"
             c432=ET.SubElement(c43, "VALUE")
             c432.text="Dutch COVID-19 response team"
 
@@ -145,21 +169,28 @@ def tsv2XML(tsvInFile):
             c4152=ET.SubElement(c415, "VALUE")
             c4152.text="ERC000033"
 
-    tree = ET.ElementTree(root) #set the root to 1st element i.e. SAMPLE_SET
-    indent(root) #make it PRETTY
 
-    # name for the output XML file
-    xmlOutFile=tsvInFile[:-3] + 'xml'
+    indent(root) #make it PRETTY
+    xmlstr = ET.tostring(root, encoding='utf8').decode('utf8')
+    #xmlstr = ET.tostring(root).decode('utf8')
+    #prettify(root)
 
     # Insert the XML version and encoding
     with open (xmlOutFile, 'w') as file:
-        file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        #file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        file.write(xmlstr)
+
+    # NOTE - this step caused strange bug.
+    # All the attrib key value pairs got set as if it were the last record (in the tsv file)
+    #tree = ET.ElementTree(root) #set the root to 1st element i.e. SAMPLE_SET
 
     # ElementTree needs to write XML in binary mode; use append option
-    with open (xmlOutFile, 'ab') as file:
-        tree.write(file)
+    # with open (xmlOutFile, 'ab') as file:
+    #     tree.write(file,encoding='UTF-8', xml_declaration=True)
 
 
 if __name__ == '__main__':
     inFile = sys.argv[1]
-    tsv2XML(inFile)
+    outFile=inFile[:-3] + 'xml' # name for the output XML file
+
+    tsv2XML(inFile,outFile) # run parser function and create XML
