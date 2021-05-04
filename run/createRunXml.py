@@ -48,10 +48,6 @@ def tsv2XML(tsvInFile,xmlOutFile):
             r1 = ET.SubElement(root, "RUN")
             r1.attrib['alias']=str(samAlias) # parse from tsv
             r1.attrib['center_name']='Dutch COVID-19 response team'
-            # r1.attrib['center_name']="ERASMUS MC, UNIVERISTY MEDICAL CENTER"
-            # r1.attrib['broker_name']="Submission account for department of Viroscience’s Research Teams, ErasmusMC"
-
-            # root.append (r1)
 
             c1 = ET.SubElement(r1,"EXPERIMENT_REF")
             c1.attrib['refname']=str(expAlias) # parse from tsv
@@ -66,13 +62,10 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c211.attrib['checksum']=str(md5) # parse from tsv
 
     indent(root) #make it PRETTY
-    #prettify(root)
     xmlstr = ET.tostring(root, encoding='utf8').decode('utf8')
-    #xmlstr = ET.tostring(root).decode('utf8')
 
     # Insert the XML version and encoding
     with open (xmlOutFile, 'w') as file:
-        #file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         file.write(xmlstr)
 
     # NOTE - this step caused strange bug.

@@ -82,13 +82,10 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c512.text="not collected"
 
     indent(root) #make it PRETTY
-    #prettify(root)
     xmlstr = ET.tostring(root, encoding='utf8').decode('utf8')
-    #xmlstr = ET.tostring(root).decode('utf8')
 
     # Insert the XML version and encoding
     with open (xmlOutFile, 'w') as file:
-        #file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         file.write(xmlstr)
 
     # NOTE - this step caused strange bug.

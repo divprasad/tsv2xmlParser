@@ -45,20 +45,10 @@ def tsv2XML(tsvInFile, xmlOutFile):
         for line in f:
             line=line.rstrip()
             alias, date, province, isolate, gid = line.split('\t')
-            #samAttrib['alias']=alias
-            # print(alias,date)
-            #samAttrib['center_name']='Dutch COVID-19 response team'
 
             r1 = ET.SubElement(root, "SAMPLE")
             r1.attrib['alias']=alias # parse from tsv
             r1.attrib['center_name']="Dutch COVID-19 response team"
-            # r1.attrib['broker_name']="Submission account for department of Viroscience’s Research Teams, ErasmusMC"
-            #r1.attrib['center_name']='Dutch COVID-19 response team'
-            #root.append (r1)
-
-            # r1 = ET.Element("SAMPLE")
-            # r1.attrib=samAttrib # parse from tsv
-            # root.append (r1)
 
             c1 = ET.SubElement(r1, "TITLE")
             c1.text = "Dutch COVID-19 response sample sequencing"
@@ -172,12 +162,9 @@ def tsv2XML(tsvInFile, xmlOutFile):
 
     indent(root) #make it PRETTY
     xmlstr = ET.tostring(root, encoding='utf8').decode('utf8')
-    #xmlstr = ET.tostring(root).decode('utf8')
-    #prettify(root)
 
     # Insert the XML version and encoding
     with open (xmlOutFile, 'w') as file:
-        #file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         file.write(xmlstr)
 
     # NOTE - this step caused strange bug.
