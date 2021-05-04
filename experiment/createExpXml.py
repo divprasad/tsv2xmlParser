@@ -45,7 +45,8 @@ def tsv2XML(tsvInFile,xmlOutFile):
             line=line.rstrip()
             samAlias, expAlias, _, _ = line.split('\t')
             r1=ET.SubElement(root,"EXPERIMENT")
-            r1.attrib['alias']=expAlias # parse from tsv
+            r1.attrib['alias']=str(expAlias) # parse from tsv
+            r1.attrib['center_name']='Dutch COVID-19 response team'
 
             c1=ET.SubElement(r1, "TITLE")
             c1.text="GridION sequencing"
@@ -56,7 +57,7 @@ def tsv2XML(tsvInFile,xmlOutFile):
             c3=ET.SubElement(r1, "DESIGN")
             c31=ET.SubElement(c3, "DESIGN_DESCRIPTION")
             c32=ET.SubElement(c3, "SAMPLE_DESCRIPTOR")
-            c32.attrib['accession']=samAlias # parse from tsv
+            c32.attrib['refname']=str(samAlias) # parse from tsv
 
             c33=ET.SubElement(c3, "LIBRARY_DESCRIPTOR")
             c331=ET.SubElement(c33, "LIBRARY_NAME")
