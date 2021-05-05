@@ -1,10 +1,11 @@
 # tsv2xmlParser
 
-Parsers for (programmatic) read submission to [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/browser/home)
+Parsers for (programmatic) read submission to [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/browser/home).
 
-Parses a .tsv file & converts to the equivalent .xml file
+Parses a .tsv file & converts to the equivalent .xml file.
 
-## `createSampleXml.py`
+#### `createSampleXml.py`
+
 takes one tsv file as the argument; tsv has the format:
 
 | "alias" | "date" | "province" | "isolateName" | "GisaidID" |
@@ -16,7 +17,7 @@ takes one tsv file as the argument; tsv has the format:
 |.. | .. | .. | .. | .. |  
 |.. | .. | .. | .. | .. |  
 
-## `createRunXml.py` and `createExpXml.py`
+#### `createRunXml.py` and `createExpXml.py`
 respectively take one tsv file as the argument; tsv has the format:
 
 | "samAlias" | "expAlias" | "gzFile" | "md5"
@@ -27,16 +28,17 @@ respectively take one tsv file as the argument; tsv has the format:
 | Run3zz_BCyy | Exp_Run3zz_BCyy | path_to_folder/Run3zz_BCyy.fastq.gz | b0f2ca8884b6ff7e35563d055e9c7d1a  
 |.. | .. | .. | .. |  
 
-where path_to_folder/ is relative to the root user directory in the ENA ftp drop-box  
+where path_to_folder/ is relative to the root user directory in the ENA ftp drop-box.  
 
 **Usage:** `python createRunXml.py runxy-yz.tsv` produces the output runxy-yz.xml  
 
-# (test) programmatic submission of samples, runs, and experiments  
+#### (test) programmatic submission of samples, runs, and experiments  
 
 ```
 curl -u Webin-USER:PASS -F "SUBMISSION=@submission.xml" -F "RUN=@runxy-yz.xml" -F "EXPERIMENT=@expxy-yz.xml" "https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/" >> runExpLog.txt 2>&1   
 ```
 
-`runExpLog.txt` file store the progress and error logs
+`runExpLog.txt` file stores the progress and error logs
 
-When tests are successful, *replace* the url https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/ with https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/ for publishing 
+When tests are successful, *replace* the url https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/ with https://www.ebi.ac.uk/ena/submit/drop-box/submit/ for publishing.  
+
