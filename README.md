@@ -3,7 +3,8 @@
 Parsers for (programmatic) read submission to [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/browser/home).
 
 Parses a .tsv file & converts to the equivalent .xml file.
-
+  
+  
 #### `createSampleXml.py`
 
 takes one tsv file as the argument; tsv has the format:
@@ -16,9 +17,10 @@ takes one tsv file as the argument; tsv has the format:
 |Run3zz_BC04 | 2020-11-19 | somewhere north | hCoV-19/Netherlands/xy-ZZZ-1004/2020 | EPI_ISL_xyyxzz |  
 |.. | .. | .. | .. | .. |  
 |.. | .. | .. | .. | .. |  
-
+  
+  
 #### `createRunXml.py` and `createExpXml.py`
-respectively take one tsv file as the argument; tsv has the format:
+take one tsv file as the argument; tsv has the format:
 
 | "samAlias" | "expAlias" | "gzFile" | "md5"
 --- | --- | --- | --- 
@@ -28,10 +30,11 @@ respectively take one tsv file as the argument; tsv has the format:
 | Run3zz_BCyy | Exp_Run3zz_BCyy | path_to_folder/Run3zz_BCyy.fastq.gz | b0f2ca8884b6ff7e35563d055e9c7d1a  
 |.. | .. | .. | .. |  
 
-where path_to_folder/ is relative to the root user directory in the ENA ftp drop-box.  
+where path_to_folder/ is relative to the root directory in the user account of the ENA ftp drop-box.   
 
 **Usage:** `python createRunXml.py runxy-yz.tsv` produces the output runxy-yz.xml  
-
+  
+  
 #### (test) programmatic submission of samples, runs, and experiments  
 
 ```
