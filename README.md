@@ -29,6 +29,7 @@ take one tsv file as the argument; tsv has the format:
 | Run3zz_BCyy | Exp_Run3zz_BCyy | path_to_folder/Run3zz_BCyy.fastq.gz | 6f7fed624f91cb4f8512b96c4d9b1dec  
 | Run3zz_BCyy | Exp_Run3zz_BCyy | path_to_folder/Run3zz_BCyy.fastq.gz | b0f2ca8884b6ff7e35563d055e9c7d1a  
 |.. | .. | .. | .. |  
+|.. | .. | .. | .. |  
 
 where path_to_folder/ is relative to the root directory in the user account of the ENA ftp drop-box.   
 
